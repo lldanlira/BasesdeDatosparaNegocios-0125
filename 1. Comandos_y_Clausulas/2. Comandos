@@ -1,0 +1,194 @@
+#Comando SELECT y FROM
+SELECT * FROM players_description;
+SELECT FirstName FROM players_description;
+SELECT FirstaName, LastName FROM players_description;
+SELECT LastName, FirstaName FROM players_description;
+
+#Comando INSERT
+INSERT INTO players_description VALUE(Playerid,'Mesut','Otzil',35,'1988-10-15',180,71,'DEU','Fernerbahce SK',36,125,'RF');
+
+SELECT * FROM players_description;
+
+#Comando MIN
+# Minimo valor del id
+SELECT MIN(Playerid) FROM players_description;
+
+# Minimo valor de Edad
+SELECT MIN(Edad) From players_description;
+
+##Minimo Valor 
+SELECT MIN(age) FROM players_description;
+
+##MAX Valor 
+SELECT MAX(age) FROM players_description;
+
+#SUM
+SELECT Team_position,SUM(Value_eur) FROM players_description
+GROUP BY Team_positions;
+
+
+##Group By
+USE players;
+SELECT Club, MAX(Age) FROM players_description
+GROUP BY Club;
+
+SELECT Nationality, MIN(Value_eur) FROM players_description
+GROUP BY Nationality;
+
+SELECT Team_position, MAX(Height) FROM players_description
+GROUP BY Team_position;
+
+
+#Where
+SELECT FirstName, Age FROM players_description
+WHERE Age = 30;
+
+SELECT Nationality, MAX(Value_er) FROM players_description
+WHERE Age<25
+GROUP BY Nationality;
+
+SELECT Nationality, MAX(Value_er), Age FROM players_description
+WHERE Age<25
+GROUP BY Nationality;
+
+SECELT FirstName, Nationality FROM players_description
+WHERE Nationality = 'ARG' AND Age<30;
+
+SELECT Club, SUM(Wage_eur) FROM players_description
+GROUP BY Club;
+
+#AVG
+SELECT Nationality, AVG(Age) FROM players_description
+GROUP BY Nationality;
+
+SELECT Club, AVG(Wage_eur) FROM players_description
+WHERE Age>25
+GROUP BY Club;
+
+SELECT Club, AVG(Wage_eur), Age FROM players_description
+WHERE Age>25
+GROUP BY Club;
+
+#COUNT
+SELECT COUNT(*) FROM players_description;
+SELECT COUNT(1) FROM players_description;
+
+SELECT COUNT(Playerid) FROM players_description
+WHERE Age>30;
+
+SELECT Nationality, COUNT(*) FROM players_description
+GROUP BY Nationality;
+
+SELECT Nationality, COUNT(*) FROM players_description
+WHERE Wage_eur>50
+GROUP BY Nationality;
+
+#Comando AND
+SELECT LastName, FROM players_description
+WHERE Age<30 AND Team_position = 'CB';
+
+SELECT LastName, Age, Team_position FROM players_description
+WHERE Age<30 AND Team_position = 'CB';
+
+#Realice el ejercicio donde la nacionalidad sea francesa y su valor del mercado sea mayor a 20
+SELECT FirstName, Nationality, Value_eur FROM players, description
+WHERE Nationality= 'FRA' AND Value_eur>20;
+
+#Comando OR
+SELECT LastName, Age, Team_position From players_description
+WHERE Age<30 OR Team_position ='CB'
+
+#Seleccionar Brasileños o mayor a 30
+SELECT FirstaName, Nationality, Value_eur FROM players_description
+WHERE Nationality= 'BRA' OR Value_eur>30;
+
+#Comando IN
+SELECT * FROM players_description
+WHERE Nationality IN ('ARG','BRA', 'FRA');
+
+#Todos los campos donde los jugadores sean del Real Madrid y Liverpool
+SELECT * FROM players_description
+WHERE Club IN ('Real Madrid CF', 'Liverpool');
+
+#Todos los campos donde los jugadores sean de 22, 25 y 30 años.
+SELECT * FROM players_description
+WHERE Age IN (22,25,30);
+
+#Comando LIKE
+#Al inicio
+SELECT Club FROM players_description
+WHERE Club LIKE 'FC%';
+
+#Al final
+SELECT Club FROM players_description
+WHERE Club LIKE '%FC';
+
+#En medio 
+SELECT Club FROM players_description
+WHERE Club LIKE '%ar%';
+
+#SELCT FirstName FROM players_description
+WHERE FirstName LIKE '%am%';
+
+#Comando NOT
+#Aplicación a NOT LIKE y NOT IN
+SELECT Club FROM players_description
+WHERE Club NOT LIKE '%FC%';
+
+SELECT FirstName FROM players_description
+WHERE FirstName NOT LIKE '%a%';
+
+SELECT Age FROM players_description
+WHERE AGE NOT IN (20,30,35);
+
+SELECT Nationality FROM players_description
+WHERE Nationality NOT IN ('ARG', 'BRA', 'FRA', 'ITA', 'ESP');
+
+#Comando BETWEEN
+SELECT BirthDate, FirstName FROM players_description
+WHERE BirthDate BETWEEN '1990-01-01' AND '1995-12-31';
+
+SELECT FirstName FROM players_description
+WHERE FirstName BETWEEN 'Abel' AND 'Boris';
+
+SELEC Playerid, FirstName FROM players_description
+WHERE Playerid BETWEEN 1 AND 10;
+
+#Comando ORDER BY
+SELECT Age FROM players_description
+ORDER BY Age ASC;
+
+SELECT Age FROM players_description
+ORDER BY Age DESC;
+
+SELECT Culb, AVG(Age) FROM players_description
+GROUP BY Club
+ORDER BY AVG(Age) DESC;
+
+SELEC Nationality, AVG(Height) FROM players_description
+WHERE Age>28
+GROUP BY Nationality
+ORDER BY AVG(Height);
+
+SELEC Nationality, AVG(Height) FROM players_description
+WHERE Age>28
+GROUP BY Nationality
+ORDER BY AVG(Height) ASC;
+
+#Comando HAVING
+SELECT Nationality, AVG(Age) FROM players_description
+GROUP BY Nationality
+HAVING AVG(Age)>28
+ORDER BY AVG(Age)
+
+SELECT Nationality, AVG(Value_eur) FROM players_description
+WHERE Nationality IN ('ARG','BRA','ESP','FRA')
+GROUP BY Nationality
+HAVING AVG(Value_eur)>40;
+
+SELECT Nationality, AVG(Value_eur) FROM players_description
+WHERE Nationality IN ('ARG','BRA','ESP','FRA')
+GROUP BY Nationality
+HAVING AVG(Value_eur)>42
+
+
