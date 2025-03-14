@@ -83,3 +83,39 @@ REPLEACE(Product_line, 'Electronic','E') AS PL_REPLEACE,
 DataSale
 FROM supermarket_sales
 WHERE DataSale BETWEEN '2019-01-01' AND '2019-12-31';
+
+SELECT DateSale, RIGHT(DateSale, 2) AS DATESALE_DAY
+FROM supermarket_sales;
+
+SELECT DateSale. RIGHT(DataSale, 5) AS DATESALE_MONTH_DAY
+FROM supermarket_sales;
+
+SELECT Gender, LEFT(Gender, 1) AS GENDER_FL
+FROM supermarket_sales;
+
+SELECT DataSale, LEFT(DataSales,4) AS DATASALE_YEAR
+FROM supermarket_sales;
+
+SELECT DateSale, LEFT(DataSale, 7) AS DATASALE_YEAR_MONTH
+FROM supermarket_sales;
+
+#LENGTH
+
+SELECT Payment, LENGTH(Payment) AS PAYMENT_LENGTH
+FROM supermarket_sales;
+
+SELECT City, LENGTH(City) AS CITY_LENGTH
+FROM supermarket_sales;
+
+SELECT City, LENGTH(City) AS CITY_LENGTH
+FROM supermarket_sales;
+HAVING CITY_LENGTH>6;
+
+SELECT City, LENGTH(City) AS CITY_LENGTH
+FROM supermarket_sales;
+HAVING CITY_LENGTH>8;
+
+SELECT City, LENGTH(City) AS CITY_LENGTH
+FROM supermarket_sales;
+HAVING CITY_LENGTH>6;
+ORDER BY CITY_LENGTH DESC;
