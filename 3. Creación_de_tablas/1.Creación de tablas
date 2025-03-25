@@ -1,0 +1,119 @@
+USE security;
+
+CREATE VIEW cliente_producto AS 
+SELECT a.surname, a.geography, a.gender,
+a.HasCrCard, a.isActiveMember,
+a.exit_date, a.birth_date,
+b.products
+FROM clientes AS a
+INNER JOIN productos AS b
+ON a.customerID	= b.customerID;
+
+SELECT * FROM cliente_producto;
+
+SELECT products, COUNT(products) AS Cant_Tipo_Producto
+FROM cliente_producto
+GROUP BY products
+ORDER BY Cant_Tipo_Producto DESC;
+
+SELECT gender, COUNT(products)
+FROM cliente_producto
+GROUP BY gender
+ORDER BY  COUNT(products) DESC;
+
+SELECT geography, gender, COUNT(gender) AS Cant_Product_Genero
+FROM cliente_producto
+GROUP BY geography, gender
+ORDER BY geography DESC;
+
+SELECT geography, gender, COUNT(gender) AS Cant_Product_Genero
+FROM cliente_producto
+WHERE geography IS NOT NULL AND gender IS NOT NULL
+GROUP BY geography, gender
+ORDER BY geography DESC;
+
+USE security;
+
+CREATE VIEW cliente_producto_scoreCrediticio AS
+SELECT a.surname, a.geography, a.gender,
+a.HasCrCard, a.isActiveMember,
+a.exit_date, a.birth_date,
+b.products,
+c.score
+FROM clientes AS a
+INNER JOIN productos AS b
+ON a.customerID = b.customerID
+INNER JOIN score_crediticio AS c
+ON a.customerID = c.customerID;
+
+SELECT * FROM cliente_producto_scoreCrediticio;
+
+USE security;
+SHOW COLUMNS FROM clientes;
+SHOW COLUMNS FROM productos;
+
+CREATE TABLE pais_genero_producto
+SELECT a.geography, a.gender, #datos de tabla cliente
+b.products #datos de tabla productos
+FROM clientes as a
+INNER JOIN productos AS b
+ON a.customerId = b.customerId;
+
+SELECT * FROM pais_genero_producto;
+
+SHOW COLUMNS FROM transacciones;
+
+CREATE TABLE caracteristicas_producto_transacciones 
+SELECT a.geography, a.gender, a.estimatedSalary, #datos de la tabla clientes
+b.products, #datos de la tabla productos
+c.trx, c.values_trx #datos de la tabla transacciones
+FROM clientes AS a
+INNER JOIN productos AS b
+ON a.customerID = b.customerID
+INNER JOIN transacciones AS c
+ON a.customerId = c.customerId;
+
+SELECT * FROM caracteristicas_producto_transacciones;
+
+SELECT products, trx, COUNT(trx)
+FROM caracteristicas_producto_transacciones
+GROUP BY products, trx
+ORDER BY products DESC;
+SELECT geography, AVG(values_trx) AS Promedio_TRX
+FROM caracteristicas_producto_transacciones
+WHERE geography IS NOT NULL
+GROUP BY geography
+ORDER BY Promedio_TRX DESC;
+
+##Tablas Temporales
+USE security;
+CREATE TEMPORARY TABLE temp_tabla1
+SELECT a.customerID, a.surname, a.geography, a.gender, a.HasCrCard, a.isActiveMember,
+a.estimatedSalary, a.application_date,
+a.exit_date, a.birth_date,
+b.products,
+c.score,
+d.trx, d.values_trx
+FROM clientes AS a
+INNER JOIN productos AS b
+ON a.customerId = b.customerId
+INNER JOIN score_crediticio AS c
+ON a.customerId = c.customerId
+INNER JOIN transacciones AS d
+ON a.customerId = d.customerId;
+
+SELECT * FROM temp_tabla1;
+
+SELECT gender, AVG(score) AS SCORE_PROMEDIO
+FROM temp_tabla1
+WHERE gender IS NOT NULL
+GROUP BY gender
+ORDER BY SCORE_PROMEDIO ASC;
+
+SELECT gender, AVG(estimatedSalary) AS SUELDO_PROMEDIO,
+AVG(score) AS SCORE_PROMEDIO
+FROM temp_tabla1
+WHERE gender IS NOT NULL
+GROUP BY gender
+ORDER BY SCORE_PROMEDIO DESC;
+
